@@ -2,10 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles/index.css';
 import App from './App';
-import * as serviceWorker from './core/serviceWorker';
+import * as serviceWorker from './serviceWorker';
 import 'fontsource-roboto';
 import 'mobx-react-lite/batchingForReactDom'
 
+
+declare global {
+    interface Window {
+        _env_: any
+    }
+}
 
 ReactDOM.render(
   <React.StrictMode>
