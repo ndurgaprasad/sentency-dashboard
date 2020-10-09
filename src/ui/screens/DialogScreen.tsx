@@ -1,7 +1,7 @@
 import {observer} from "mobx-react";
-import {Button, Dialog, DialogActions} from "@material-ui/core";
 import React from "react";
-import {useStores} from "../data/store/UsesStore";
+import {useStores} from "../../data/store/UsesStore";
+import {Button, Modal} from "semantic-ui-react";
 
 export const DialogScreen: React.FC<any> = observer((props) => {
     const {viewStore} = useStores()
@@ -22,16 +22,19 @@ export const DialogScreen: React.FC<any> = observer((props) => {
     }
 
     return (
-        <Dialog open={dialogView !== undefined} onClose={handleClose} maxWidth="xs" fullWidth={true}>
+        <Modal
+            onClose={() => handleClose()}
+            size="small"
+            open={dialogView != null}>
             {dialogView?.view}
-            <DialogActions>
-                <Button onClick={handleClose} color="primary">
+            <Modal.Actions>
+                <Button negative onClick={handleClose}>
                     Cancel
                 </Button>
-                <Button onClick={handleConfirm} color="primary">
+                <Button positive onClick={handleConfirm}>
                     Confirm
                 </Button>
-            </DialogActions>
-        </Dialog>
+            </Modal.Actions>
+        </Modal>
     )
 })

@@ -7,7 +7,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 The list of all the third party frameworks used in this project:
 
-* [Material-UI](https://material-ui.com/pt/): React components for faster and easier web development.
+* [Semantic UI](https://react.semantic-ui.com/): React components for faster and easier web development using Semantic UI framework.
 * [React-Router-DOM](https://github.com/ReactTraining/react-router): Declarative routing for React
 * [MobX](https://mobx.js.org/): a battle tested library that makes state management simple and scalable
 * [SuperAgent](https://visionmedia.github.io/superagent/): light-weight progressive ajax API crafted for flexibility, readability, and a low learning curve

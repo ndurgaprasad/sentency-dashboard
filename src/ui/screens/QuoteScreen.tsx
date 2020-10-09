@@ -1,12 +1,12 @@
 import React from "react";
 import {CRUDBar} from "../components/menu/CRUDBar";
-import {Box} from "@material-ui/core";
 import {observer} from "mobx-react";
-import {useStores} from "../data/store/UsesStore";
+import {useStores} from "../../data/store/UsesStore";
 import {BaseModalView} from "../components/modalviews/BaseModalView";
-import {Quote} from "../data/model/Quote";
+import {Quote} from "../../data/model/Quote";
 import {CRUDQuoteView} from "../components/modalviews/CRUDQuoteView";
 import {QuoteList} from "../components/lists/QuoteList";
+import {Divider, Segment} from "semantic-ui-react";
 
 export const QuoteScreen: React.FC<any> = observer((props) => {
     const {authorStore, viewStore, quoteStore} = useStores()
@@ -30,11 +30,12 @@ export const QuoteScreen: React.FC<any> = observer((props) => {
     }
 
     return (
-        <Box mt={2} mr={2}>
+        <Segment fluid>
             <CRUDBar
                 title={selectedAuthor ? selectedAuthor.name + " Quotes" : "Select an author ..."}
                 onAddClicked={onAddClicked}/>
+            <Divider/>
             <QuoteList/>
-        </Box>
+        </Segment>
     )
 })

@@ -1,7 +1,7 @@
-import {DialogContent, DialogTitle} from "@material-ui/core";
 import React, {useState} from "react";
-import {Quote} from "../../data/model/Quote";
+import {Quote} from "../../../data/model/Quote";
 import {InputTextArea} from "../forms/input/InputTextArea";
+import {Modal} from "semantic-ui-react";
 
 export interface CRUDQuoteViewProps {
     onQuoteChanged?: (quote: Quote) => void
@@ -23,11 +23,11 @@ export const CRUDQuoteView: React.FC<CRUDQuoteViewProps> = (props) => {
     }
 
     return (
-        <div>
-            <DialogTitle id="form-dialog-title">{title}</DialogTitle>
-            <DialogContent>
-                <InputTextArea label="Quote" name="quote" onChange={onChange} defaultValue={quote.quote}/>
-            </DialogContent>
-        </div>
+        <>
+            <Modal.Header>{title}</Modal.Header>
+            <Modal.Content>
+                    <InputTextArea label="Quote" name="quote" onChange={onChange} defaultValue={quote.quote}/>
+            </Modal.Content>
+        </>
     )
 }

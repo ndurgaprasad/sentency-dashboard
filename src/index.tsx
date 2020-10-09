@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles/index.css';
-import App from './App';
+import App from './ui/App';
 import * as serviceWorker from './serviceWorker';
-import 'fontsource-roboto';
 import 'mobx-react-lite/batchingForReactDom'
 
 
