@@ -1,16 +1,16 @@
 import React, {useState} from "react";
-import {Quote} from "../../../data/model/Quote";
-import {InputTextArea} from "../forms/input/InputTextArea";
+import {Quote} from "../../../../data/model/Quote";
+import {InputTextArea} from "../../forms/input/InputTextArea";
 import {Modal} from "semantic-ui-react";
 
-export interface CRUDQuoteViewProps {
+export interface ModalQuoteViewProps {
     onQuoteChanged?: (quote: Quote) => void
     title: string,
     authorId: string,
     defaultQuote?: Quote
 }
 
-export const CRUDQuoteView: React.FC<CRUDQuoteViewProps> = (props) => {
+export const ModalQuoteView: React.FC<ModalQuoteViewProps> = (props) => {
     const {onQuoteChanged, title, authorId, defaultQuote} = props
     const [quote, setQuote] = useState(defaultQuote ? defaultQuote : {authorId: authorId} as Quote)
 
