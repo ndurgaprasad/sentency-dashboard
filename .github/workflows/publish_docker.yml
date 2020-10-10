@@ -24,4 +24,4 @@ jobs:
           context: .
           file: ./Dockerfile.prod
           push: true
-          tags: walterjgsp/sentency-dashboard/sentency-dashboard/
+          tags: walterjgsp/sentency-dashboard/sentency-dashboard
