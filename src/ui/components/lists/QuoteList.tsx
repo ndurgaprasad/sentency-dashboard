@@ -2,10 +2,10 @@ import {observer} from "mobx-react";
 import {useStores} from "../../../data/store/UsesStore";
 import React from "react";
 import {QuoteItem} from "./items/QuoteItem";
-import {DeleteView} from "../modalviews/DeleteView";
-import {BaseModalView} from "../modalviews/BaseModalView";
+import {ModalDeleteView} from "../modal/views/ModalDeleteView";
+import {BaseModalView} from "../../base/BaseModalView";
 import {Quote} from "../../../data/model/Quote";
-import {CRUDQuoteView} from "../modalviews/CRUDQuoteView";
+import {ModalQuoteView} from "../modal/views/ModalQuoteView";
 import {List} from "semantic-ui-react";
 
 export const QuoteList: React.FC<any> = observer((props) => {
@@ -16,7 +16,7 @@ export const QuoteList: React.FC<any> = observer((props) => {
             onConfirmAction: () => {
                 quoteStore.deleteQuote(quote)
             },
-            view: (<DeleteView title="Delete quote" toDelete={quote.quote}/>)
+            view: (<ModalDeleteView title="Delete quote" toDelete={quote.quote}/>)
         } as BaseModalView)
     }
 
@@ -26,8 +26,8 @@ export const QuoteList: React.FC<any> = observer((props) => {
             onConfirmAction: () => {
                 quoteStore.updateQuote(mQuote)
             },
-            view: (<CRUDQuoteView title="Update Quote" onQuoteChanged={(tQuote => mQuote = tQuote)}
-                                  authorId={quote.authorId} defaultQuote={mQuote}/>)
+            view: (<ModalQuoteView title="Update Quote" onQuoteChanged={(tQuote => mQuote = tQuote)}
+                                   authorId={quote.authorId} defaultQuote={mQuote}/>)
         } as BaseModalView)
     }
 

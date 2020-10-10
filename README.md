@@ -1,4 +1,10 @@
-# Sentency Dashboard
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=walterjgsp_sentency-dashboard&metric=alert_status)](https://sonarcloud.io/dashboard?id=walterjgsp_sentency-dashboard)
+
+<div align="center">
+    <h1 align="center">
+    Sentency Dashboard
+    </h1>
+</div>
 
 Dashboard to manage the quotes created using React and Typescript.
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

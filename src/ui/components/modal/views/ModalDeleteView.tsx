@@ -6,7 +6,7 @@ export interface DeleteModalProps {
     toDelete: string
 }
 
-export const DeleteView: React.FC<DeleteModalProps> = (props) => {
+export const ModalDeleteView: React.FC<DeleteModalProps> = (props) => {
     const {title, toDelete} = props
 
     return (

@@ -1,5 +1,5 @@
 import {action, observable} from "mobx";
-import {BaseModalView} from "../../ui/components/modalviews/BaseModalView";
+import {BaseModalView} from "../../ui/base/BaseModalView";
 
 export class ViewStore {
     @observable modalView?: BaseModalView = undefined

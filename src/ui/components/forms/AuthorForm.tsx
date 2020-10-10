@@ -4,8 +4,8 @@ import {observer} from "mobx-react";
 import {useStores} from "../../../data/store/UsesStore";
 import {Author} from "../../../data/model/Author";
 import {CRUDMenu} from "../menu/CRUDMenu";
-import {DeleteView} from "../modalviews/DeleteView";
-import {BaseModalView} from "../modalviews/BaseModalView";
+import {ModalDeleteView} from "../modal/views/ModalDeleteView";
+import {BaseModalView} from "../../base/BaseModalView";
 import {Card, Grid, GridColumn, GridRow, Image} from "semantic-ui-react";
 
 export const AuthorForm: React.FC<any> = observer((props) => {
@@ -35,7 +35,7 @@ export const AuthorForm: React.FC<any> = observer((props) => {
                 onConfirmAction: () => {
                     authorStore.deleteAuthor(selectedAuthor)
                 },
-                view: (<DeleteView title="Delete author" toDelete={selectedAuthor.name}/>)
+                view: (<ModalDeleteView title="Delete author" toDelete={selectedAuthor.name}/>)
             } as BaseModalView)
         }
     }

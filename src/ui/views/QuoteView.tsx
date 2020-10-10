@@ -2,13 +2,13 @@ import React from "react";
 import {CRUDBar} from "../components/menu/CRUDBar";
 import {observer} from "mobx-react";
 import {useStores} from "../../data/store/UsesStore";
-import {BaseModalView} from "../components/modalviews/BaseModalView";
+import {BaseModalView} from "../base/BaseModalView";
 import {Quote} from "../../data/model/Quote";
-import {CRUDQuoteView} from "../components/modalviews/CRUDQuoteView";
+import {ModalQuoteView} from "../components/modal/views/ModalQuoteView";
 import {QuoteList} from "../components/lists/QuoteList";
 import {Divider, Segment} from "semantic-ui-react";
 
-export const QuoteScreen: React.FC<any> = observer((props) => {
+export const QuoteView: React.FC<any> = observer((props) => {
     const {authorStore, viewStore, quoteStore} = useStores()
     const selectedAuthor = authorStore.selectedAuthor
 
@@ -23,8 +23,8 @@ export const QuoteScreen: React.FC<any> = observer((props) => {
                 onConfirmAction: () => {
                     quoteStore.addQuote(mQuote)
                 },
-                view: (<CRUDQuoteView title="Add Quote" onQuoteChanged={(quote => mQuote = quote)}
-                                      authorId={selectedAuthor.id}/>)
+                view: (<ModalQuoteView title="Add Quote" onQuoteChanged={(quote => mQuote = quote)}
+                                       authorId={selectedAuthor.id}/>)
             } as BaseModalView)
         }
     }
