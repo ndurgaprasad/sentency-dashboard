@@ -1,7 +1,7 @@
 import {BaseStore} from "./BaseStore";
 import {Quote} from "../model/Quote";
 import {action, observable, runInAction} from "mobx";
-import {QuoteService} from "../service/QuoteService";
+import {QuoteService} from "../../network/service/QuoteService";
 
 export class QuoteStore extends BaseStore {
 
@@ -9,6 +9,8 @@ export class QuoteStore extends BaseStore {
 
     @observable selectedQuote?: Quote = undefined
     @observable quoteList: Quote[] = []
+    @observable quotesCount: number = 0
+    @observable monthQuotes: number = 0
 
     @action
     async loadQuotes(authorId: string) {
@@ -68,6 +70,30 @@ export class QuoteStore extends BaseStore {
                         this.loadQuotes(quote.authorId)
                     })
                 }
+            })
+        })
+    }
+
+    @action
+    async loadQuotesCount(){
+        this.baseCall(async () => {
+            const response = QuoteService.countQuotes()
+            response.then(res => {
+                runInAction(() => {
+                    this.quotesCount = res
+                })
+            })
+        })
+    }
+
+    @action
+    async countMonthQuotes(){
+        this.baseCall(async () => {
+            const response = QuoteService.monthQuotes()
+            response.then(res => {
+                runInAction(() => {
+                    this.monthQuotes = res
+                })
             })
         })
     }

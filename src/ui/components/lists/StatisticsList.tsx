@@ -1,16 +1,20 @@
 import React from "react";
 import {StatisticGroup} from "semantic-ui-react";
 import {StatisticsItem} from "../items/StatisticsItem";
+import {observer} from "mobx-react";
+import {useStores} from "../../../data/store/UsesStore";
 
-export const StatisticsList: React.FC<any> = (props) => {
+export const StatisticsList: React.FC<any> = observer((props) => {
+    const {quoteStore, authorStore} = useStores()
+
     return (
         <StatisticGroup widths='four'>
-            <StatisticsItem value={"22"} label={"Authors"}/>
-            <StatisticsItem value={"230"} label={"Quotes"}/>
-            <StatisticsItem value={""} label={"Most Quotes"}
-                            image={"https://www.estrelando.com.br/uploads/2019/11/14/dwayne-ok-1573764118.jpg"}
+            <StatisticsItem value={"" + authorStore.authorCount} label={"Authors"}/>
+            <StatisticsItem value={"" + quoteStore.quotesCount} label={"Quotes"}/>
+            <StatisticsItem value={""} label={"Most quotes"}
+                            image={authorStore.authorWithMostQuotes?.picUrl ?? ""}
                             isText={true}/>
-            <StatisticsItem value={"230"} label={"Quotes"}/>
+            <StatisticsItem value={"" + quoteStore.monthQuotes} label={"Month new quotes"}/>
         </StatisticGroup>
     )
-}
+})
