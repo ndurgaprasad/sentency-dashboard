@@ -1,5 +1,5 @@
 import React from "react";
-import {Quote} from "../../../../data/model/Quote";
+import {Quote} from "../../../data/model/Quote";
 import {Button, List} from "semantic-ui-react";
 
 interface QuoteItemProps {

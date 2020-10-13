@@ -1,6 +1,6 @@
 import React from "react";
-import {Author} from "../../../../data/model/Author";
-import {useStores} from "../../../../data/store/UsesStore";
+import {Author} from "../../../data/model/Author";
+import {useStores} from "../../../data/store/UsesStore";
 import { List, Image } from "semantic-ui-react";
 
 interface AuthorItemProps {
