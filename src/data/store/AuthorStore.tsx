@@ -1,6 +1,6 @@
 import {action, observable, runInAction} from "mobx";
 import {Author} from "../model/Author";
-import {AuthorService} from "../service/AuthorService";
+import {AuthorService} from "../../network/service/AuthorService";
 import {BaseStore} from "./BaseStore";
 
 export class AuthorStore extends BaseStore {
@@ -9,6 +9,8 @@ export class AuthorStore extends BaseStore {
 
     @observable selectedAuthor?: Author = undefined
     @observable authorList: Author[] = []
+    @observable authorCount: number = 0
+    @observable authorWithMostQuotes?: Author = undefined
 
     @action
     selectAuthor(author?: Author) {
@@ -38,7 +40,7 @@ export class AuthorStore extends BaseStore {
     @action
     async addAuthor(author: Author) {
         this.baseCall(async () => {
-            const response =  AuthorService.addAuthor(author)
+            const response = AuthorService.addAuthor(author)
             response.then(res => {
                 if (res.status === 200) {
                     runInAction(() => {
@@ -80,6 +82,29 @@ export class AuthorStore extends BaseStore {
     @action
     updateSelectedAuthor(author: Author) {
         this.selectedAuthor = author
+    }
+
+    @action
+    async loadAuthorsCount() {
+        this.baseCall(async () => {
+            const response = AuthorService.countAuthors()
+            response.then(res => {
+                runInAction(() => {
+                    this.authorCount = res
+                })
+            })
+        })
+    }
+
+    @action async loadAuthorWithMostQuotes(){
+        this.baseCall(async () => {
+            const response = AuthorService.authorWithMostQuotes()
+            response.then(res => {
+                runInAction(() => {
+                    this.authorWithMostQuotes = res
+                })
+            })
+        })
     }
 
 }

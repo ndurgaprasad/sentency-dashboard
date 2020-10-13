@@ -1,4 +1,4 @@
-import {Author} from "../model/Author";
+import {Author} from "../../data/model/Author";
 import request from "superagent";
 import Config from "../../core/Config";
 
@@ -23,5 +23,17 @@ export class AuthorService {
 
     static async deleteAuthor(author: Author): Promise<any> {
         return request.delete(this.baseUrl + "/delete/").send({id: author.id}).then()
+    }
+
+    static async countAuthors(): Promise<number> {
+        return request.get(this.baseUrl + "/count/").then(res => {
+            return res.body
+        })
+    }
+
+    static async authorWithMostQuotes(): Promise<Author>{
+        return request.get(this.baseUrl+"/top").then(res => {
+            return res.body
+        })
     }
 }

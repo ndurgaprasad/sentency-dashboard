@@ -1,6 +1,6 @@
 import Config from "../../core/Config";
 import request from "superagent";
-import {Quote} from "../model/Quote";
+import {Quote} from "../../data/model/Quote";
 
 export class QuoteService {
     private static baseUrl: string = Config.BASE_URL + "/quotes"
@@ -23,5 +23,17 @@ export class QuoteService {
 
     static async updateQuote(quote: Quote): Promise<any> {
         return request.put(this.baseUrl + "/update/").send(quote).then()
+    }
+
+    static async countQuotes(): Promise<number> {
+        return request.get(this.baseUrl + "/count/").then(res => {
+            return res.body
+        })
+    }
+
+    static async monthQuotes(): Promise<number> {
+        return request.get(this.baseUrl + "/month/count/").then(res => {
+            return res.body
+        })
     }
 }
