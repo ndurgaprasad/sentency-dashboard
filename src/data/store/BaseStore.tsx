@@ -4,7 +4,7 @@ export abstract class BaseStore {
 
     @observable isLoading = false;
 
-    baseCall(execute: () => void) {
+    protected baseCall(execute: () => void) {
         this.isLoading = true
         try {
             execute()

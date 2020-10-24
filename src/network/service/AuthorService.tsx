@@ -1,16 +1,16 @@
 import {Author} from "../../data/model/Author";
-import request from "superagent";
 import Config from "../../core/Config";
+import NetworkInterceptor from "../interceptors/NetworkInterceptor";
 
 export class AuthorService {
-    private static baseUrl: string = Config.BASE_URL + "/authors"
+    private static baseUrl: string = Config.BASE_URL + "/authors/"
 
     static async addAuthor(author: Author): Promise<any> {
-        return request.post(this.baseUrl + "/add/").send(author).then()
+        return NetworkInterceptor.network().post(this.baseUrl + "add/").send(author).then()
     }
 
     static async loadAuthors(): Promise<Author[]> {
-        return request.get(this.baseUrl).then(res => {
+        return NetworkInterceptor.network().get(this.baseUrl).then(res => {
                 let listAuthor: Author[] = res.body
                 return listAuthor
             }
@@ -18,21 +18,21 @@ export class AuthorService {
     }
 
     static async updateAuthor(author: Author): Promise<any> {
-        return request.post(this.baseUrl + "/update/").send(author).then()
+        return NetworkInterceptor.network().post(this.baseUrl + "update/").send(author).then()
     }
 
     static async deleteAuthor(author: Author): Promise<any> {
-        return request.delete(this.baseUrl + "/delete/").send({id: author.id}).then()
+        return NetworkInterceptor.network().delete(this.baseUrl + "delete/").send({id: author.id}).then()
     }
 
     static async countAuthors(): Promise<number> {
-        return request.get(this.baseUrl + "/count/").then(res => {
+        return NetworkInterceptor.network().get(this.baseUrl + "count/").then(res => {
             return res.body
         })
     }
 
-    static async authorWithMostQuotes(): Promise<Author>{
-        return request.get(this.baseUrl+"/top").then(res => {
+    static async authorWithMostQuotes(): Promise<Author> {
+        return NetworkInterceptor.network().get(this.baseUrl + "top").then(res => {
             return res.body
         })
     }

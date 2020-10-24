@@ -1,5 +1,5 @@
 import React from "react";
-import {useStores} from "../../data/store/UsesStore";
+import {useStores} from "../../data/context/UseStore";
 import {AuthorForm} from "../components/forms/AuthorForm";
 import {AuthorList} from "../components/lists/AuthorList";
 

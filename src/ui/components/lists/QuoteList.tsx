@@ -1,5 +1,5 @@
 import {observer} from "mobx-react";
-import {useStores} from "../../../data/store/UsesStore";
+import {useStores} from "../../../data/context/UseStore";
 import React from "react";
 import {QuoteItem} from "../items/QuoteItem";
 import {ModalDeleteView} from "../modal/views/ModalDeleteView";
