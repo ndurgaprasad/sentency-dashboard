@@ -1,3 +1,7 @@
 .margin-top {
     margin-top: 10px !important;
 }
+
+.ui.grid {
+    height: 100%;
+}

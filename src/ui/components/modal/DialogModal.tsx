@@ -1,6 +1,6 @@
 import {observer} from "mobx-react";
 import React from "react";
-import {useStores} from "../../../data/store/UsesStore";
+import {useStores} from "../../../data/context/UseStore";
 import {Button, Modal} from "semantic-ui-react";
 
 export const DialogModal: React.FC<any> = observer((props) => {

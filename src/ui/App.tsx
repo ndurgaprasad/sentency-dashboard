@@ -1,32 +1,27 @@
 import React from 'react';
 import 'semantic-ui-css/semantic.min.css'
-import {BrowserRouter, Switch, Route} from "react-router-dom";
+
+import {Switch, Route, HashRouter} from "react-router-dom";
 import {DialogModal} from "./components/modal/DialogModal";
-import {DataScreen} from "./screens/DataScreen";
-import {HomeScreen} from "./screens/HomeScreen";
-import {Navbar} from "./components/menu/Navbar";
+import {MainScreen} from "./screens/MainScreen";
+import {LoginScreen} from "./screens/LoginScreen";
 
 export default function App() {
 
-    const margin = {padding: '0.5rem'}
-
     return (
-        <BrowserRouter basename={process.env.PUBLIC_URL}>
-            <div className="App">
-                <Navbar/>
-                <div style={margin}>
-                    <Switch>
-                        <Route exact path="/">
-                            <HomeScreen/>
-                        </Route>
-                        <Route path="/data">
-                            <DataScreen/>
-                        </Route>
-                    </Switch>
-                </div>
+        <HashRouter>
+            <div className="App root">
+                <Switch>
+                    <Route exact path="/login">
+                        <LoginScreen/>
+                    </Route>
+                    <Route path="/">
+                        <MainScreen/>
+                    </Route>
+                </Switch>
             </div>
             <DialogModal/>
-        </BrowserRouter>
+        </HashRouter>
     );
 }
 

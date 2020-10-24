@@ -2,7 +2,7 @@ import React from "react";
 import {StatisticGroup} from "semantic-ui-react";
 import {StatisticsItem} from "../items/StatisticsItem";
 import {observer} from "mobx-react";
-import {useStores} from "../../../data/store/UsesStore";
+import {useStores} from "../../../data/context/UseStore";
 
 export const StatisticsList: React.FC<any> = observer((props) => {
     const {quoteStore, authorStore} = useStores()
