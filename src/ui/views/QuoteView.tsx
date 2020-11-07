@@ -14,6 +14,8 @@ export const QuoteView: React.FC<any> = observer((props) => {
 
     if (selectedAuthor?.id) {
         quoteStore.loadQuotes(selectedAuthor.id)
+    } else {
+        quoteStore.cleanQuotes()
     }
 
     const onAddClicked = () => {

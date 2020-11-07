@@ -14,7 +14,7 @@ export const AuthorForm: React.FC<any> = observer((props) => {
 
     const onChange = (name: string, value: string) => {
         let currentAuthor = {...selectedAuthor, [name]: value} as unknown as Pick<Author, keyof Author>
-        authorStore.updateSelectedAuthor(currentAuthor)
+        authorStore.selectAuthor(currentAuthor)
     }
 
     const onAddClicked = () => {

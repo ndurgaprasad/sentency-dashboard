@@ -24,6 +24,12 @@ export class QuoteStore extends BaseStore {
     }
 
     @action
+    cleanQuotes() {
+        this.fullQuoteList = []
+        this.search("")
+    }
+
+    @action
     search(query?: string) {
         if (query) {
             this.quoteList = this.fullQuoteList.filter(item => item.quote.includes(query))
@@ -75,7 +81,7 @@ export class QuoteStore extends BaseStore {
     }
 
     @action
-    async loadQuotesCount(){
+    async loadQuotesCount() {
         this.baseCall(async () => {
             const response = QuoteService.countQuotes()
             response.then(res => {
@@ -87,7 +93,7 @@ export class QuoteStore extends BaseStore {
     }
 
     @action
-    async countMonthQuotes(){
+    async countMonthQuotes() {
         this.baseCall(async () => {
             const response = QuoteService.monthQuotes()
             response.then(res => {

@@ -80,11 +80,6 @@ export class AuthorStore extends BaseStore {
     }
 
     @action
-    updateSelectedAuthor(author: Author) {
-        this.selectedAuthor = author
-    }
-
-    @action
     async loadAuthorsCount() {
         this.baseCall(async () => {
             const response = AuthorService.countAuthors()
