@@ -10,7 +10,7 @@ import {Card, Grid, GridColumn, GridRow, Image} from "semantic-ui-react";
 
 export const AuthorForm: React.FC<any> = observer((props) => {
     const {authorStore, viewStore} = useStores()
-    const selectedAuthor = authorStore.selectedAuthor
+    const selectedAuthor = {...authorStore.selectedAuthor} as Author
 
     const onChange = (name: string, value: string) => {
         let currentAuthor = {...selectedAuthor, [name]: value} as unknown as Pick<Author, keyof Author>
@@ -26,6 +26,12 @@ export const AuthorForm: React.FC<any> = observer((props) => {
     const onEditClicked = () => {
         if (selectedAuthor) {
             authorStore.updateAuthor(selectedAuthor)
+        }
+    }
+
+    const onCleanClicked = () => {
+        if(selectedAuthor){
+            authorStore.selectAuthor()
         }
     }
 
@@ -63,7 +69,8 @@ export const AuthorForm: React.FC<any> = observer((props) => {
                     hasId={selectedAuthor ? (!!selectedAuthor.id) : false}
                     onDeleteClicked={onDeleteClicked}
                     onEditClicked={onEditClicked}
-                    onAddClicked={onAddClicked}/>
+                    onAddClicked={onAddClicked}
+                    onCleanClicked={onCleanClicked}/>
             </Card.Content>
         </Card>
     )

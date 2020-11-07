@@ -30,7 +30,11 @@ export const QuoteItem: React.FC<QuoteItemProps> = (props) => {
                 <Button circular onClick={onDelete} icon="trash" color="red"/>
                 <Button circular onClick={onEdit} icon="edit" color="blue"/>
             </List.Content>
-            <List.Content> {quote.quote}</List.Content>
+            <List.Content>
+                <List.Header>
+                    {quote.quote}
+                </List.Header>
+            </List.Content>
         </List.Item>
     )
 }
