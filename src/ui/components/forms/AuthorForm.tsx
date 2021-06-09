@@ -7,6 +7,7 @@ import {CRUDMenu} from "../menu/CRUDMenu";
 import {ModalDeleteView} from "../modal/views/ModalDeleteView";
 import {BaseModalView} from "../../base/BaseModalView";
 import {Card, Grid, GridColumn, GridRow, Image} from "semantic-ui-react";
+import profile from "../../../images/profile.png"
 
 export const AuthorForm: React.FC<any> = observer((props) => {
     const {authorStore, viewStore} = useStores()
@@ -30,7 +31,7 @@ export const AuthorForm: React.FC<any> = observer((props) => {
     }
 
     const onCleanClicked = () => {
-        if(selectedAuthor){
+        if (selectedAuthor) {
             authorStore.selectAuthor()
         }
     }
@@ -52,7 +53,7 @@ export const AuthorForm: React.FC<any> = observer((props) => {
                 <Grid divided columns={2}>
                     <GridRow padded>
                         <GridColumn width={5}>
-                            <Image wrapped src={selectedAuthor?.picUrl} size='small' rounded/>
+                            <Image wrapped src={selectedAuthor?.picUrl ?? profile} size='small' rounded/>
                         </GridColumn>
                         <GridColumn width={11}>
                             <InputText label="Name" name="name" onChange={onChange}

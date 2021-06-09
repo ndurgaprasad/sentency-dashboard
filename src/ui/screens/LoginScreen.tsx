@@ -1,8 +1,9 @@
 import React, {useState} from "react";
 import {observer} from "mobx-react";
-import {Button, Form, Grid, GridColumn, Segment} from "semantic-ui-react";
+import {Button, Form, Grid, GridColumn, Image, Segment} from "semantic-ui-react";
 import {useStores} from "../../data/context/UseStore";
 import {Redirect} from "react-router-dom";
+import {ReactComponent as Logo} from '../../images/logo.svg';
 
 export const LoginScreen: React.FC<any> = observer(() => {
 
@@ -23,6 +24,11 @@ export const LoginScreen: React.FC<any> = observer(() => {
                 <Grid verticalAlign='middle' centered columns={4}>
                     <GridColumn>
                         <Segment>
+                            <Grid centered>
+                                <Image centered size={"small"}>
+                                    <Logo/>
+                                </Image>
+                            </Grid>
                             <Form>
                                 <Form.Field>
                                     <label>Username</label>
@@ -43,4 +49,5 @@ export const LoginScreen: React.FC<any> = observer(() => {
             }
         </>
     )
-})
+}
+)

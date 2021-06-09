@@ -3,37 +3,37 @@ import Config from "../../core/Config";
 import NetworkInterceptor from "../interceptors/NetworkInterceptor";
 
 export class AuthorService {
-    private static baseUrl: string = Config.BASE_URL + "/authors/"
+    private static baseUrl: string = Config.BASE_URL + "/author"
 
     static async addAuthor(author: Author): Promise<any> {
-        return NetworkInterceptor.network().post(this.baseUrl + "add/").send(author).then()
+        return NetworkInterceptor.network().post(this.baseUrl, author).then()
     }
 
     static async loadAuthors(): Promise<Author[]> {
-        return NetworkInterceptor.network().get(this.baseUrl).then(res => {
-                let listAuthor: Author[] = res.body
+        return NetworkInterceptor.network().get(this.baseUrl+ "/all").then(res => {
+                let listAuthor: Author[] = res.data
                 return listAuthor
             }
         )
     }
 
     static async updateAuthor(author: Author): Promise<any> {
-        return NetworkInterceptor.network().post(this.baseUrl + "update/").send(author).then()
+        return NetworkInterceptor.network().put(this.baseUrl, author).then()
     }
 
     static async deleteAuthor(author: Author): Promise<any> {
-        return NetworkInterceptor.network().delete(this.baseUrl + "delete/").send({id: author.id}).then()
+        return NetworkInterceptor.network().delete(this.baseUrl, {params: {id: author.id}}).then()
     }
 
     static async countAuthors(): Promise<number> {
-        return NetworkInterceptor.network().get(this.baseUrl + "count/").then(res => {
-            return res.body
+        return NetworkInterceptor.network().get(this.baseUrl + "/count").then(res => {
+            return res.data["count"]
         })
     }
 
     static async authorWithMostQuotes(): Promise<Author> {
-        return NetworkInterceptor.network().get(this.baseUrl + "top").then(res => {
-            return res.body
+        return NetworkInterceptor.network().get(this.baseUrl + "/top").then(res => {
+            return res.data
         })
     }
 }

@@ -12,12 +12,10 @@ export class UserStore extends BaseStore {
     async login(email: string, password: string) {
         return this.baseCall(async () => {
             UserService.login(email, password).then(response => {
-                if (response.code === 200) {
-                    runInAction(() => {
-                        NetworkInterceptor.setToken(response.message)
-                        this.loggedUser = {email: email, token: response.message}
-                    })
-                }
+                runInAction(() => {
+                    NetworkInterceptor.setToken(response.token)
+                    this.loggedUser = {email: email, token: response.token}
+                })
             }).catch(res => {
                 console.log(res)
             })

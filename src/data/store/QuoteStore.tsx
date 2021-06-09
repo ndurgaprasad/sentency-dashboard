@@ -32,7 +32,7 @@ export class QuoteStore extends BaseStore {
     @action
     search(query?: string) {
         if (query) {
-            this.quoteList = this.fullQuoteList.filter(item => item.quote.includes(query))
+            this.quoteList = this.fullQuoteList.filter(item => item.message.includes(query))
         } else {
             this.quoteList = this.fullQuoteList
         }

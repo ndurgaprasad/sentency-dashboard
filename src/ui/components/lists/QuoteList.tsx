@@ -16,7 +16,7 @@ export const QuoteList: React.FC<any> = observer((props) => {
             onConfirmAction: () => {
                 quoteStore.deleteQuote(quote)
             },
-            view: (<ModalDeleteView title="Delete quote" toDelete={quote.quote}/>)
+            view: (<ModalDeleteView title="Delete quote" toDelete={quote.message}/>)
         } as BaseModalView)
     }
 

@@ -32,7 +32,7 @@ export const QuoteItem: React.FC<QuoteItemProps> = (props) => {
             </List.Content>
             <List.Content>
                 <List.Header>
-                    {quote.quote}
+                    {quote.message}
                 </List.Header>
             </List.Content>
         </List.Item>
