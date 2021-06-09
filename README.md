@@ -25,7 +25,7 @@ The project will generate a container with the dashboard implementation. Before 
 running the command:
 
 ```bash
-docker build -t sentency_dashboard -f Dockerfile.prod .
+docker build -t sentency_dashboard -f Dockerfile .
 ```
 
 After the container finishes building you can run with docker-compose.
