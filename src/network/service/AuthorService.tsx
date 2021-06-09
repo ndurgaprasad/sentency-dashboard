@@ -10,9 +10,8 @@ export class AuthorService {
     }
 
     static async loadAuthors(): Promise<Author[]> {
-        return NetworkInterceptor.network().get(this.baseUrl+ "/all").then(res => {
-                let listAuthor: Author[] = res.data
-                return listAuthor
+        return NetworkInterceptor.network().get(this.baseUrl + "/all").then(res => {
+                return res.data
             }
         )
     }
@@ -22,7 +21,7 @@ export class AuthorService {
     }
 
     static async deleteAuthor(author: Author): Promise<any> {
-        return NetworkInterceptor.network().delete(this.baseUrl, {params: {id: author.id}}).then()
+        return NetworkInterceptor.network().delete(this.baseUrl + `/${author.id}`).then()
     }
 
     static async countAuthors(): Promise<number> {

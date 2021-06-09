@@ -53,14 +53,19 @@ export class QuoteStore extends BaseStore {
     }
 
     @action
+    private async processResponse(res: any, authorId: string) {
+        runInAction(() => {
+            this.loadQuotes(authorId)
+        })
+    }
+
+    @action
     async updateQuote(quote: Quote) {
         this.baseCall(async () => {
             const response = QuoteService.updateQuote(quote)
             response.then(res => {
                 if (res.status === 200) {
-                    runInAction(() => {
-                        this.loadQuotes(quote.authorId)
-                    })
+                    this.processResponse(res, quote.authorId)
                 }
             })
         })
@@ -71,10 +76,8 @@ export class QuoteStore extends BaseStore {
         this.baseCall(async () => {
             const response = QuoteService.deleteQuote(quote)
             response.then(res => {
-                if (res.status === 200) {
-                    runInAction(() => {
-                        this.loadQuotes(quote.authorId)
-                    })
+                if (res.status === 202) {
+                    this.processResponse(res, quote.authorId)
                 }
             })
         })

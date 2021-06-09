@@ -26,7 +26,7 @@ export const ModalQuoteView: React.FC<ModalQuoteViewProps> = (props) => {
         <>
             <Modal.Header>{title}</Modal.Header>
             <Modal.Content>
-                    <InputTextArea label="Quote" name="quote" onChange={onChange} defaultValue={quote.message}/>
+                    <InputTextArea label="Quote" name="message" onChange={onChange} defaultValue={quote.message}/>
             </Modal.Content>
         </>
     )

@@ -8,8 +8,7 @@ export class QuoteService {
     static async loadQuotes(authorId: string): Promise<Quote[]> {
         return NetworkInterceptor.network().get(Config.BASE_URL + `/author/${authorId}/quotes`)
             .then(res => {
-                let listQuotes: Quote[] = res.data
-                return listQuotes
+                return res.data
             })
     }
 
@@ -18,7 +17,7 @@ export class QuoteService {
     }
 
     static async deleteQuote(quote: Quote): Promise<any> {
-        return NetworkInterceptor.network().delete(this.baseUrl, {params: {id: quote.id}}).then()
+        return NetworkInterceptor.network().delete(this.baseUrl + `/${quote.id}`).then()
     }
 
     static async updateQuote(quote: Quote): Promise<any> {

@@ -43,9 +43,7 @@ export class AuthorStore extends BaseStore {
             const response = AuthorService.addAuthor(author)
             response.then(res => {
                 if (res.status === 200) {
-                    runInAction(() => {
-                        this.loadAuthors()
-                    })
+                    this.processResponse(res)
                 }
             })
         })
@@ -57,11 +55,16 @@ export class AuthorStore extends BaseStore {
             const response = AuthorService.updateAuthor(author)
             response.then(res => {
                 if (res.status === 200) {
-                    runInAction(() => {
-                        this.loadAuthors()
-                    })
+                    this.processResponse(res)
                 }
             })
+        })
+    }
+
+    @action
+    private async processResponse(res: any) {
+        runInAction(() => {
+            this.loadAuthors()
         })
     }
 
@@ -70,10 +73,8 @@ export class AuthorStore extends BaseStore {
         this.baseCall(async () => {
             const response = AuthorService.deleteAuthor(author)
             response.then(res => {
-                if (res.status === 200) {
-                    runInAction(() => {
-                        this.loadAuthors()
-                    })
+                if (res.status === 202) {
+                    this.processResponse(res)
                 }
             })
         })
@@ -91,7 +92,8 @@ export class AuthorStore extends BaseStore {
         })
     }
 
-    @action async loadAuthorWithMostQuotes(){
+    @action
+    async loadAuthorWithMostQuotes() {
         this.baseCall(async () => {
             const response = AuthorService.authorWithMostQuotes()
             response.then(res => {

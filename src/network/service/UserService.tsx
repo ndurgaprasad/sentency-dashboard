@@ -9,8 +9,7 @@ export class UserService {
         return NetworkInterceptor.network()
             .post(this.baseUrl + "/login", {email: email, password: password})
             .then(res => {
-                const response: SentencyResponse = res.data
-                return response
+                return res.data
             })
     }
 }

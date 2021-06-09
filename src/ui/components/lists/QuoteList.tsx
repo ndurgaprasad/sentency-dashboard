@@ -34,7 +34,12 @@ export const QuoteList: React.FC<any> = observer((props) => {
     return (
         <List divided verticalAlign='middle' relaxed selection animated>
             {quoteStore.quoteList.map(quote => {
-                return (<QuoteItem quote={quote} onDeleteClicked={onDeleteClicked} onEditClicked={onEditClicked}/>)
+                return (<QuoteItem
+                        quote={quote}
+                        onDeleteClicked={onDeleteClicked}
+                        onEditClicked={onEditClicked}
+                        key={quote.id}/>
+                )
             })}
         </List>
     )
