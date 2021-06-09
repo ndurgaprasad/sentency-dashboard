@@ -9,13 +9,16 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
-      - name: Push to GitHub Packages
-        uses: docker/build-push-action@v1
+      - name: Log in to GitHub Docker Registry
+        uses: docker/login-action@v1
         with:
-          path: ./
-          dockerfile: ./Dockerfile.prod
+          registry: docker.pkg.github.com
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-          registry: docker.pkg.github.com
-          repository: walterjgsp/sentency-dashboard/sentency-dashboard
-          tag_with_ref: true
+      - name: Build container image
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: |
+            docker.pkg.github.com/${{ github.repository }}/sentency-dashboard:${{ github.sha }}
+            docker.pkg.github.com/${{ github.repository }}sentency-dashboard:${{ github.event.release.tag_name }}
