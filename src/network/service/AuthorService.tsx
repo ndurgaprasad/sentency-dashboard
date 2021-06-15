@@ -16,6 +16,12 @@ export class AuthorService {
         )
     }
 
+    static async loadPaginated(page: number): Promise<Author[]> {
+        return NetworkInterceptor.network().get(`${this.baseUrl}?page=${page}&size=10`).then(res => {
+            return res.data["data"]
+        })
+    }
+
     static async updateAuthor(author: Author): Promise<any> {
         return NetworkInterceptor.network().put(this.baseUrl, author).then()
     }

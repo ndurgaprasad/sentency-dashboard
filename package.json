@@ -1,8 +1,8 @@
 {
   "name": "sentency_dashboard",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "private": true,
-  "homepage": "/dashboard/",
+  "homepage": "/dashboard",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.30",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
@@ -17,6 +17,7 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/superagent": "^4.1.8",
     "axios": "^0.21.1",
+    "axios-retry": "^3.1.9",
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
     "react": "^16.13.1",

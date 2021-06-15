@@ -5,12 +5,15 @@ import {AuthorList} from "../components/lists/AuthorList";
 
 export const AuthorView: React.FC<any> = (props) => {
     const {authorStore} = useStores()
+
     authorStore.loadAuthors()
 
     return (
-        <div>
-            <AuthorForm/>
-            <AuthorList/>
-        </div>
+        <>
+            <div>
+                <AuthorForm/>
+                <AuthorList/>
+            </div>
+        </>
     )
 }

@@ -32,7 +32,7 @@ export const QuoteView: React.FC<any> = observer((props) => {
     }
 
     return (
-        <Segment fluid>
+        <Segment fluid={"true"}>
             <CRUDBar
                 title={selectedAuthor ? selectedAuthor.name + " Quotes" : "Select an author ..."}
                 onAddClicked={onAddClicked}/>

@@ -51,7 +51,7 @@ export const AuthorForm: React.FC<any> = observer((props) => {
         <Card fluid>
             <Card.Content>
                 <Grid divided columns={2}>
-                    <GridRow padded>
+                    <GridRow padded={"true"}>
                         <GridColumn width={5}>
                             <Image wrapped src={selectedAuthor?.picUrl ?? profile} size='small' rounded/>
                         </GridColumn>

@@ -1,7 +1,7 @@
 import React from 'react';
 import 'semantic-ui-css/semantic.min.css'
 
-import {Switch, Route, HashRouter} from "react-router-dom";
+import {Switch, Route, BrowserRouter} from "react-router-dom";
 import {DialogModal} from "./components/modal/DialogModal";
 import {MainScreen} from "./screens/MainScreen";
 import {LoginScreen} from "./screens/LoginScreen";
@@ -9,7 +9,7 @@ import {LoginScreen} from "./screens/LoginScreen";
 export default function App() {
 
     return (
-        <HashRouter>
+        <BrowserRouter basename="/dashboard">
             <div className="App root">
                 <Switch>
                     <Route exact path="/login">
@@ -21,7 +21,7 @@ export default function App() {
                 </Switch>
             </div>
             <DialogModal/>
-        </HashRouter>
+        </BrowserRouter>
     );
 }
 
