@@ -7,6 +7,7 @@ import {Quote} from "../../data/model/Quote";
 import {ModalQuoteView} from "../components/modal/views/ModalQuoteView";
 import {QuoteList} from "../components/lists/QuoteList";
 import {Divider, Segment} from "semantic-ui-react";
+import {QuoteLocalization} from "../../data/model/QuoteLocalization";
 
 export const QuoteView: React.FC<any> = observer((props) => {
     const {authorStore, viewStore, quoteStore} = useStores()
@@ -20,15 +21,25 @@ export const QuoteView: React.FC<any> = observer((props) => {
 
     const onAddClicked = () => {
         if (selectedAuthor?.id) {
-            let mQuote = {authorId: selectedAuthor.id} as Quote
+            let mQuote = createCleanQuote(selectedAuthor.id)
             viewStore.setModalView({
                 onConfirmAction: () => {
                     quoteStore.addQuote(mQuote)
                 },
-                view: (<ModalQuoteView title="Add Quote" onQuoteChanged={(quote => mQuote = quote)}
-                                       authorId={selectedAuthor.id}/>)
+                view: (<ModalQuoteView title="Add Quote"
+                                       onQuoteChanged={(quote => mQuote = quote)}
+                                       defaultQuote={mQuote}/>)
             } as BaseModalView)
         }
+    }
+
+    const createCleanQuote = (authorId: string): Quote => {
+        return {
+            authorId: authorId,
+            messages: [
+                {code: "en-US"} as QuoteLocalization
+            ]
+        } as Quote
     }
 
     return (

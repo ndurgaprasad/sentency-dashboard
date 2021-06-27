@@ -1,5 +1,7 @@
+import {QuoteLocalization} from "./QuoteLocalization";
+
 export interface Quote {
     id?: string,
     authorId: string,
-    message: string
+    messages: QuoteLocalization[]
 }

@@ -18,7 +18,12 @@ export const InputText: React.FC<InputTextProps> = (props) => {
     }
 
     return (
-        <Input fluid name={name} label={label} labelPosition={"left"} onChange={handleOnTextChange}
-               value={defaultValue || ''}/>
+        <Input fluid
+               name={name}
+               label={label}
+               labelPosition={"left"}
+               onChange={handleOnTextChange}
+               value={defaultValue || ''}
+        />
     )
 }

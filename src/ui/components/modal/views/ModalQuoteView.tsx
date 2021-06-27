@@ -1,32 +1,83 @@
 import React, {useState} from "react";
 import {Quote} from "../../../../data/model/Quote";
 import {InputTextArea} from "../../forms/input/InputTextArea";
-import {Modal} from "semantic-ui-react";
+import {Form, Modal} from "semantic-ui-react";
+import {Selector} from "../../forms/input/Selector";
 
 export interface ModalQuoteViewProps {
     onQuoteChanged?: (quote: Quote) => void
     title: string,
-    authorId: string,
-    defaultQuote?: Quote
+    defaultQuote: Quote
 }
 
 export const ModalQuoteView: React.FC<ModalQuoteViewProps> = (props) => {
-    const {onQuoteChanged, title, authorId, defaultQuote} = props
-    const [quote, setQuote] = useState(defaultQuote ? defaultQuote : {authorId: authorId} as Quote)
+    const {onQuoteChanged, title, defaultQuote} = props
+    const [values, setValues] = useState({quote: defaultQuote, code: "en-US"})
 
     const onChange = (name: string, value: string) => {
-        let newQuote = {...quote, [name]: value}
-        setQuote(newQuote)
-        if (onQuoteChanged) {
-            onQuoteChanged(newQuote)
+        let newValues: { quote: Quote; code: string }
+        if (name === "message") {
+            let newQuote = changeMessage(values.quote, value)
+            newValues = {...values, quote: newQuote}
+        } else {
+            newValues = {...values, [name]: value}
         }
+        setValues(newValues)
+        if (onQuoteChanged) {
+            onQuoteChanged(newValues.quote)
+        }
+    }
+
+    const getOptions = (): string[] => {
+        return values.quote.messages.map(quote => {
+            return quote.code
+        })
+    }
+
+    const changeMessage = (quote: Quote, message: string): Quote => {
+        let index = values.quote.messages.findIndex(message => {
+            return message.code === values.code
+        })
+
+        if (index !== -1) {
+            quote.messages[index].message = message
+        }
+
+        return quote
+    }
+
+    const getMessage = (): string => {
+        const message = values.quote.messages.find(message => {
+            return message.code === values.code
+        })
+        if (message) {
+            return message.message
+        } else {
+            return values.quote.messages[0].message
+        }
+    }
+
+    const onSelectChange = (code: string) => {
+        let newValues = {...values, code: code}
+        setValues(newValues)
     }
 
     return (
         <>
             <Modal.Header>{title}</Modal.Header>
             <Modal.Content>
-                    <InputTextArea label="Quote" name="message" onChange={onChange} defaultValue={quote.message}/>
+                <Form>
+                    <Selector
+                        options={getOptions()}
+                        placeholder="Select code"
+                        value={values.code}
+                        onSelectChange={onSelectChange}/>
+                    <InputTextArea
+                        label="Quote"
+                        name="message"
+                        onChange={onChange}
+                        defaultValue={getMessage()}/>
+                </Form>
             </Modal.Content>
         </>
     )

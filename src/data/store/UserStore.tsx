@@ -1,48 +1,37 @@
-import {action, observable, runInAction} from "mobx";
+import {makeAutoObservable} from "mobx";
 import {User} from "../model/User";
 import {UserService} from "../../network/service/UserService";
-import {BaseStore} from "./BaseStore";
 import NetworkInterceptor from "../../network/interceptors/NetworkInterceptor";
 
-export class UserStore extends BaseStore {
+export class UserStore {
 
-    @observable loggedUser?: User = undefined
+    loggedUser?: User = undefined
 
     constructor() {
-        super();
+        makeAutoObservable(this)
         this.checkLocal()
     }
 
-    @action
-    async checkLocal() {
+    checkLocal() {
         let token = localStorage.getItem("token")
         let email = localStorage.getItem("email")
 
-        runInAction(() => {
-            if (email !== null && token !== null) {
-                NetworkInterceptor.setToken(token)
-                this.loggedUser = {email: email, token: token}
-            }
-        })
+        if (email !== null && token !== null) {
+            this.loggedUser = {email: email, token: token}
+        }
     }
 
-    @action
     async login(email: string, password: string) {
-        return this.baseCall(async () => {
-            UserService.login(email, password).then(response => {
-                runInAction(() => {
-                    NetworkInterceptor.setToken(response.token)
-                    this.loggedUser = {email: email, token: response.token}
-                })
-                localStorage.setItem("token", response.token)
-                localStorage.setItem("email", email)
-            }).catch(res => {
-                console.log(res)
-            })
+        UserService.login(email, password).then(response => {
+            NetworkInterceptor.setToken(response.token)
+            this.loggedUser = {email: email, token: response.token}
+            localStorage.setItem("token", response.token)
+            localStorage.setItem("email", email)
+        }).catch(res => {
+            console.log(res)
         })
     }
 
-    @action
     async logout() {
         this.loggedUser = undefined
         localStorage.removeItem("token")

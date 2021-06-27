@@ -1,20 +1,37 @@
 import Config from "../../core/Config";
-import axios from "axios";
+import axios, {AxiosInstance} from "axios";
 import axiosRetry from "axios-retry";
 
 export default class NetworkInterceptor {
 
     static token: string = "";
-    private static instance = axios.create()
+    private static instance: AxiosInstance
 
-    static network() {
+    private constructor() {
+    }
+
+    static network(): AxiosInstance {
+        if (!this.instance) {
+            this.startInstance()
+        }
+        return this.instance
+    }
+
+    static startInstance() {
+        this.instance = axios.create()
         this.instance.defaults.headers.common['apiKey'] = Config.API_KEY;
         axiosRetry(this.instance, {retries: 3, retryDelay: axiosRetry.exponentialDelay});
-        return this.instance
+        let token = localStorage.getItem("token")
+
+        if (token) {
+            this.setToken(token)
+        }
     }
 
     static setToken(token: string) {
         this.token = token
-        this.instance.defaults.headers.common['Authorization'] = `Bearer ${this.token}`;
+        if (this.instance) {
+            this.instance.defaults.headers.common['Authorization'] = `Bearer ${this.token}`;
+        }
     }
 }

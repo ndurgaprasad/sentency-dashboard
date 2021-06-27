@@ -1,6 +1,6 @@
 import React from "react";
 import {Quote} from "../../../data/model/Quote";
-import {Button, List} from "semantic-ui-react";
+import {Button, Label, List} from "semantic-ui-react";
 
 interface QuoteItemProps {
     quote: Quote
@@ -32,8 +32,15 @@ export const QuoteItem: React.FC<QuoteItemProps> = (props) => {
             </List.Content>
             <List.Content>
                 <List.Header>
-                    {quote.message}
+                    {quote.messages[0].message}
                 </List.Header>
+                <List.Description>
+                    {quote.messages.map(message => {
+                        return <Label key={message.id}>
+                            {message.code}
+                        </Label>
+                    })}
+                </List.Description>
             </List.Content>
         </List.Item>
     )

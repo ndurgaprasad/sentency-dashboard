@@ -4,6 +4,7 @@ import './styles/index.css';
 import App from './ui/App';
 import * as serviceWorker from './serviceWorker';
 import 'mobx-react-lite/batchingForReactDom'
+import NetworkInterceptor from "./network/interceptors/NetworkInterceptor";
 
 
 declare global {
@@ -12,9 +13,11 @@ declare global {
     }
 }
 
+NetworkInterceptor.startInstance()
+
 ReactDOM.render(
-    <App />,
-  document.getElementById('root')
+    <App/>,
+    document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

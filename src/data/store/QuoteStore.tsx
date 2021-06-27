@@ -1,55 +1,44 @@
-import {BaseStore} from "./BaseStore";
 import {Quote} from "../model/Quote";
-import {action, observable, runInAction} from "mobx";
+import {action, makeAutoObservable, runInAction} from "mobx";
 import {QuoteService} from "../../network/service/QuoteService";
 
-export class QuoteStore extends BaseStore {
+export class QuoteStore {
 
     private fullQuoteList: Quote[] = [];
 
-    @observable selectedQuote?: Quote = undefined
-    @observable quoteList: Quote[] = []
-    @observable quotesCount: number = 0
-    @observable monthQuotes: number = 0
+    selectedQuote?: Quote = undefined
+    quoteList: Quote[] = []
+    quotesCount: number = 0
+    monthQuotes: number = 0
 
-    @action
-    async loadQuotes(authorId: string) {
-        this.baseCall(async () => {
-            const quotes = await QuoteService.loadQuotes(authorId)
-            runInAction(() => {
-                this.fullQuoteList = quotes
-                this.search("")
-            })
-        })
+    constructor() {
+        makeAutoObservable(this)
     }
 
-    @action
+    async loadQuotes(authorId: string) {
+        const quotes = await QuoteService.loadQuotes(authorId)
+        this.fullQuoteList = quotes
+        this.search("")
+    }
+
     cleanQuotes() {
         this.fullQuoteList = []
         this.search("")
     }
 
-    @action
     search(query?: string) {
         if (query) {
-            this.quoteList = this.fullQuoteList.filter(item => item.message.includes(query))
+            this.quoteList = this.fullQuoteList.filter(item => item.messages[0].message.includes(query))
         } else {
             this.quoteList = this.fullQuoteList
         }
     }
 
-    @action
     async addQuote(quote: Quote) {
-        this.baseCall(async () => {
-            const response = QuoteService.addQuote(quote)
-            response.then(res => {
-                if (res.status === 200) {
-                    runInAction(() => {
-                        this.loadQuotes(quote.authorId)
-                    })
-                }
-            })
-        })
+        const response = await QuoteService.addQuote(quote)
+        if (response.status === 200) {
+            this.loadQuotes(quote.authorId)
+        }
     }
 
     @action
@@ -61,49 +50,29 @@ export class QuoteStore extends BaseStore {
 
     @action
     async updateQuote(quote: Quote) {
-        this.baseCall(async () => {
-            const response = QuoteService.updateQuote(quote)
-            response.then(res => {
-                if (res.status === 200) {
-                    this.processResponse(res, quote.authorId)
-                }
-            })
-        })
+        const response = await QuoteService.updateQuote(quote)
+        if (response.status === 200) {
+            this.processResponse(response, quote.authorId)
+        }
     }
 
     @action
     async deleteQuote(quote: Quote) {
-        this.baseCall(async () => {
-            const response = QuoteService.deleteQuote(quote)
-            response.then(res => {
-                if (res.status === 202) {
-                    this.processResponse(res, quote.authorId)
-                }
-            })
-        })
+        const response = await QuoteService.deleteQuote(quote)
+        if (response.status === 202) {
+            this.processResponse(response, quote.authorId)
+        }
     }
 
     @action
     async loadQuotesCount() {
-        this.baseCall(async () => {
-            const response = QuoteService.countQuotes()
-            response.then(res => {
-                runInAction(() => {
-                    this.quotesCount = res
-                })
-            })
-        })
+        const response = await QuoteService.countQuotes()
+        this.quotesCount = response
     }
 
     @action
     async countMonthQuotes() {
-        this.baseCall(async () => {
-            const response = QuoteService.monthQuotes()
-            response.then(res => {
-                runInAction(() => {
-                    this.monthQuotes = res
-                })
-            })
-        })
+        const response = await QuoteService.monthQuotes()
+        this.monthQuotes = response
     }
 }

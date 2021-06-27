@@ -1,40 +1,42 @@
-import {action, observable, runInAction} from "mobx";
+import {action, makeAutoObservable, runInAction} from "mobx";
 import {Author} from "../model/Author";
 import {AuthorService} from "../../network/service/AuthorService";
-import {BaseStore} from "./BaseStore";
 
-export class AuthorStore extends BaseStore {
+export class AuthorStore {
 
     private fullAuthorList: Author[] = [];
 
     constructor() {
-        super();
+        makeAutoObservable(this)
         this.loadAuthorsCount()
     }
 
-    @observable selectedAuthor?: Author = undefined
-    @observable authorList: Author[] = []
-    @observable authorCount: number = 0
-    @observable authorWithMostQuotes?: Author = undefined
-    @observable currentPage: number = 1
-    @observable maxPages: number = 1
+    selectedAuthor?: Author = undefined
+    authorList: Author[] = []
+    authorCount: number = 0
+    authorWithMostQuotes?: Author = undefined
+    currentPage: number = 1
+    maxPages: number = 1
+    isLoading = false;
 
     @action
     selectAuthor(author?: Author) {
         this.selectedAuthor = author
     }
 
-    @action
     async loadAuthors() {
-        this.isLoading = true
-        this.baseCall(async () => {
-            const authors = await AuthorService.loadPaginated(this.currentPage)
-            runInAction(() => {
-                this.isLoading = false
-                this.fullAuthorList = authors
-                this.search("")
-            })
+        const quotes = await AuthorService.loadPaginated(this.currentPage)
+        runInAction(() => {
+            this.isLoading = true
+            this.fullAuthorList = quotes
         })
+        this.setLoading(false)
+        this.search("")
+    }
+
+    @action
+    setLoading(loading: boolean) {
+        this.isLoading = loading
     }
 
     @action
@@ -54,69 +56,40 @@ export class AuthorStore extends BaseStore {
 
     @action
     async addAuthor(author: Author) {
-        this.baseCall(async () => {
-            const response = AuthorService.addAuthor(author)
-            response.then(res => {
-                if (res.status === 200) {
-                    this.processResponse(res)
-                }
-            })
-        })
+        const response = await AuthorService.addAuthor(author)
+        if (response.status === 200) {
+            this.loadAuthors()
+        }
     }
 
     @action
     async updateAuthor(author: Author) {
-        this.baseCall(async () => {
-            const response = AuthorService.updateAuthor(author)
-            response.then(res => {
-                if (res.status === 200) {
-                    this.processResponse(res)
-                }
-            })
-        })
-    }
-
-    @action
-    private async processResponse(res: any) {
-        runInAction(() => {
+        const response = await AuthorService.updateAuthor(author)
+        if (response.status === 200) {
             this.loadAuthors()
-        })
+        }
     }
 
     @action
     async deleteAuthor(author: Author) {
-        this.baseCall(async () => {
-            const response = AuthorService.deleteAuthor(author)
-            response.then(res => {
-                if (res.status === 202) {
-                    this.processResponse(res)
-                }
-            })
-        })
+        const response = await AuthorService.deleteAuthor(author)
+        if (response.status === 202) {
+            this.loadAuthors()
+        }
     }
 
-    @action
     async loadAuthorsCount() {
-        this.baseCall(async () => {
-            const response = AuthorService.countAuthors()
-            response.then(res => {
-                runInAction(() => {
-                    this.authorCount = res
-                    this.maxPages = Math.floor(res / 10)
-                })
-            })
+        const response = await AuthorService.countAuthors()
+        runInAction(() => {
+            this.authorCount = response
+            this.maxPages = Math.floor(response / 10)
         })
     }
 
-    @action
     async loadAuthorWithMostQuotes() {
-        this.baseCall(async () => {
-            const response = AuthorService.authorWithMostQuotes()
-            response.then(res => {
-                runInAction(() => {
-                    this.authorWithMostQuotes = res
-                })
-            })
+        const response = await AuthorService.authorWithMostQuotes()
+        runInAction(() => {
+            this.authorWithMostQuotes = response
         })
     }
 

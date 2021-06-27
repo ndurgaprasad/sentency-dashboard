@@ -16,7 +16,7 @@ export const QuoteList: React.FC<any> = observer((props) => {
             onConfirmAction: () => {
                 quoteStore.deleteQuote(quote)
             },
-            view: (<ModalDeleteView title="Delete quote" toDelete={quote.message}/>)
+            view: (<ModalDeleteView title="Delete quote" toDelete={quote.messages[0].message}/>)
         } as BaseModalView)
     }
 
@@ -26,8 +26,9 @@ export const QuoteList: React.FC<any> = observer((props) => {
             onConfirmAction: () => {
                 quoteStore.updateQuote(mQuote)
             },
-            view: (<ModalQuoteView title="Update Quote" onQuoteChanged={(tQuote => mQuote = tQuote)}
-                                   authorId={quote.authorId} defaultQuote={mQuote}/>)
+            view: (<ModalQuoteView title="Update Quote"
+                                   onQuoteChanged={(tQuote => mQuote = tQuote)}
+                                   defaultQuote={mQuote}/>)
         } as BaseModalView)
     }
 

@@ -18,9 +18,11 @@ export const InputTextArea: React.FC<InputTextProps> = (props) => {
     }
 
     return (
-        <Form>
-            <Form.TextArea name={name} placeholder={label} value={defaultValue || ''}
-                           onChange={handleOnTextChange}/>
-        </Form>
+        <Form.TextArea
+            name={name}
+            placeholder={label}
+            value={defaultValue || ''}
+            onChange={handleOnTextChange}
+        />
     )
 }

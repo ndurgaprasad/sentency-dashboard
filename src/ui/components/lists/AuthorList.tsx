@@ -10,8 +10,8 @@ export const AuthorList: React.FC<any> = observer((props) => {
         const handlePaginationChange = (event: React.MouseEvent<HTMLAnchorElement>, data: PaginationProps) => {
             authorStore.changePage(data.activePage as number)
         }
-        return (
 
+        return (
             <>
                 {authorStore.isLoading ?
                     (
