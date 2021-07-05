@@ -64,15 +64,17 @@ export class QuoteStore {
         }
     }
 
-    @action
     async loadQuotesCount() {
         const response = await QuoteService.countQuotes()
-        this.quotesCount = response
+        runInAction(() => {
+            this.quotesCount = response
+        })
     }
 
-    @action
     async countMonthQuotes() {
         const response = await QuoteService.monthQuotes()
-        this.monthQuotes = response
+        runInAction(() => {
+            this.monthQuotes = response
+        })
     }
 }
