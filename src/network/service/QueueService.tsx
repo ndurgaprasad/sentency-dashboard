@@ -7,7 +7,7 @@ export class QueueService {
     private static baseUrl: string = Config.BASE_URL + "/queue"
 
     static async getQueuedLocalizations(): Promise<QueueLocalization[]> {
-        return await NetworkInterceptor.network()
+        return NetworkInterceptor.network()
             .get(this.baseUrl + "/language")
             .then(res => {
                 return res.data
@@ -15,7 +15,7 @@ export class QueueService {
     }
 
     static async dropLocalization(id: string): Promise<GenericResponse> {
-        return await NetworkInterceptor.network()
+        return NetworkInterceptor.network()
             .delete(`${this.baseUrl}/language/${id}`)
             .then(res => {
                 return res.data
@@ -23,7 +23,7 @@ export class QueueService {
     }
 
     static async applyLocalization(id: string): Promise<GenericResponse> {
-        return await NetworkInterceptor.network()
+        return NetworkInterceptor.network()
             .post(`${this.baseUrl}/language/${id}`)
             .then(res => {
                 return res.data

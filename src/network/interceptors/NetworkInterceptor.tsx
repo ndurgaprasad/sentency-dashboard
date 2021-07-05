@@ -8,6 +8,7 @@ export default class NetworkInterceptor {
     private static instance: AxiosInstance
 
     private constructor() {
+        // To make the interceptor a singleton we make the constructor private
     }
 
     static network(): AxiosInstance {

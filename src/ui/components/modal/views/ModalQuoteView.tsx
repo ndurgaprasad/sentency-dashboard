@@ -35,8 +35,8 @@ export const ModalQuoteView: React.FC<ModalQuoteViewProps> = (props) => {
     }
 
     const changeMessage = (quote: Quote, message: string): Quote => {
-        let index = values.quote.messages.findIndex(message => {
-            return message.code === values.code
+        let index = values.quote.messages.findIndex(mMessage => {
+            return mMessage.code === values.code
         })
 
         if (index !== -1) {
@@ -47,8 +47,8 @@ export const ModalQuoteView: React.FC<ModalQuoteViewProps> = (props) => {
     }
 
     const getMessage = (): string => {
-        const message = values.quote.messages.find(message => {
-            return message.code === values.code
+        const message = values.quote.messages.find(mMessage => {
+            return mMessage.code === values.code
         })
         if (message) {
             return message.message
