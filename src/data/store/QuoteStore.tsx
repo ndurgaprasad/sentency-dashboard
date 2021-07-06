@@ -1,10 +1,12 @@
 import {Quote} from "../model/Quote";
 import {action, makeAutoObservable, runInAction} from "mobx";
 import {QuoteService} from "../../network/service/QuoteService";
+import {QuoteLocalizationService} from "../../network/service/QuoteLocalizationService";
 
 export class QuoteStore {
 
     private fullQuoteList: Quote[] = [];
+    private authorId: string = "";
 
     selectedQuote?: Quote = undefined
     quoteList: Quote[] = []
@@ -17,6 +19,7 @@ export class QuoteStore {
 
     async loadQuotes(authorId: string) {
         const quotes = await QuoteService.loadQuotes(authorId)
+        this.authorId = authorId
         this.fullQuoteList = quotes
         this.search("")
     }
@@ -42,9 +45,9 @@ export class QuoteStore {
     }
 
     @action
-    private async processResponse(res: any, authorId: string) {
+    private async processResponse() {
         runInAction(() => {
-            this.loadQuotes(authorId)
+            this.loadQuotes(this.authorId)
         })
     }
 
@@ -52,7 +55,23 @@ export class QuoteStore {
     async updateQuote(quote: Quote) {
         const response = await QuoteService.updateQuote(quote)
         if (response.status === 200) {
-            this.processResponse(response, quote.authorId)
+            this.processResponse()
+        }
+    }
+
+    async addLocalization(quote: Quote, code: string, message: string) {
+        if (quote.id) {
+            const response = await QuoteLocalizationService.createLocalization(code, message, quote.id)
+            if (response.status === 200) {
+                this.processResponse()
+            }
+        }
+    }
+
+    async deleteLocalization(id: string) {
+        const response = await QuoteLocalizationService.deleteLocalization(id)
+        if (response.status === 202) {
+            this.processResponse()
         }
     }
 
@@ -60,7 +79,7 @@ export class QuoteStore {
     async deleteQuote(quote: Quote) {
         const response = await QuoteService.deleteQuote(quote)
         if (response.status === 202) {
-            this.processResponse(response, quote.authorId)
+            this.processResponse()
         }
     }
 
